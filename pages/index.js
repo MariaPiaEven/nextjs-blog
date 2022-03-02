@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData } from '../lib/posts'
+import Link from 'next/link'
+import Date from '../components/date'
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData()
@@ -20,7 +22,7 @@ export default function Home({ allPostsData }) {
       </Head>
       <section className={utilStyles.headingMd}>
         <p>Bonjour! Je suis Maria-Pia!
-          Je suis en formation Développeur Web et Web Mobile à CCI Formation. 
+          Je suis en formation Développeur Web et Web Mobile à CCI Formation Nancy, France. 
           Cette formation me permet de venir compléter mon expertise initiale de designer graphique au Pérou.
           Vous pouvez regarder mon portfolio sur <a href="https://github.com/MariaPiaEven">GITHUB</a>.
         </p>
@@ -35,12 +37,14 @@ export default function Home({ allPostsData }) {
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              {title}
-              <br />
-              {id}
-              <br />
-              {date}
-            </li>
+            <Link href={`/posts/${id}`}>
+              <a>{title}</a>
+            </Link>
+            <br />
+            <small className={utilStyles.lightText}>
+              <Date dateString={date} />
+            </small>
+          </li>
           ))}
         </ul>
       </section>
